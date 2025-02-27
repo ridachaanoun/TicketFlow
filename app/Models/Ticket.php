@@ -10,30 +10,41 @@ class Ticket extends Model
 {
     use HasFactory;
 
-    protected $table = 'ticket'; 
+    protected $table = 'tickets'; 
 
     protected $fillable = [
         'title',
         'description',
         'status',
-        'user_id',
+        'client_id',
+        'developer_id',
+        'admin_id',
         'software_id',
         'priority',
         'system',
         'screenshot',
         'issue_steps',
-        'scenario_description'
+        'scenario_description',
+        'assigned_at'
     ];
 
-
-    public function user(): BelongsTo
+    public function client(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'client_id');
     }
-
 
     public function software(): BelongsTo
     {
-        return $this->belongsTo(Software::class);
+        return $this->belongsTo(Software::class, 'software_id');
+    }
+
+    public function developer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'developer_id');
+    }
+
+    public function admin(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'admin_id');
     }
 }
